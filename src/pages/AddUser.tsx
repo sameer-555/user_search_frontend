@@ -19,7 +19,7 @@ const AddUser = () => {
   const [isSnackbarOpen, setSnackbarOpen] = React.useState(false);
 
   const onSubmit = async (formData) => {
-    const apiUrl = `https://user-search-app-4qin.onrender.com/add`
+    const apiUrl = `${process.env.BACKEND_ENDPOINT}/add`
     // 'http://localhost:8000/user/add';
 
     try {
