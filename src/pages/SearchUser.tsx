@@ -11,7 +11,7 @@ const UserSearchList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const trimmedSearchTerm = searchTerm.trim();
-        const apiUrl = `${process.env.BACKEND_ENDPOINT}/user?name=${trimmedSearchTerm}`;
+        const apiUrl = `${process.env.REACT_APP_BACKEND_ENDPOINT}/user?name=${trimmedSearchTerm}`;
         try {
           const response = await fetch(apiUrl);
           if (response.ok) {

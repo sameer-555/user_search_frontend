@@ -19,7 +19,7 @@ const AddUser = () => {
   const [isSnackbarOpen, setSnackbarOpen] = React.useState(false);
 
   const onSubmit = async (formData) => {
-    const apiUrl = `${process.env.BACKEND_ENDPOINT}/add`
+    const apiUrl = `${process.env.REACT_APP_BACKEND_ENDPOINT}/add`
     // 'http://localhost:8000/user/add';
 
     try {
