@@ -3,26 +3,33 @@ import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const UserSearchList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
       const trimmedSearchTerm = searchTerm.trim();
-        const apiUrl = `${process.env.REACT_APP_BACKEND_ENDPOINT}/user?name=${trimmedSearchTerm}`;
-        try {
-          const response = await fetch(apiUrl);
-          if (response.ok) {
-            const data = await response.json();
-            setUsers(data.users);
-          } else {
-            console.error('Error fetching users:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error fetching users:', error.message);
+      const apiUrl = `${process.env.REACT_APP_BACKEND_ENDPOINT}/user?name=${trimmedSearchTerm}`;
+
+      try {
+        setLoading(true);
+        const response = await fetch(apiUrl);
+
+        if (response.ok) {
+          const data = await response.json();
+          setUsers(data.users);
+        } else {
+          console.error('Error fetching users:', response.statusText);
         }
+      } catch (error) {
+        console.error('Error fetching users:', error.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchUsers();
@@ -43,18 +50,22 @@ const UserSearchList = () => {
         style={inputStyles}
       />
 
-      <div style={cardsContainerStyles}>
-        {users.map((user) => (
-          <Card key={user._id} style={cardStyles} variant="outlined">
-            <CardContent>
-              <Typography variant="h6">{user.name}</Typography>
-              <Typography>Age: {user.age}</Typography>
-              <Typography>Height: {user.height}</Typography>
-              <Typography>Weight: {user.weight}</Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {loading ? (
+        <CircularProgress style={loaderStyles} />
+      ) : (
+        <div style={cardsContainerStyles}>
+          {users.map((user) => (
+            <Card key={user._id} style={cardStyles} variant="outlined">
+              <CardContent>
+                <Typography variant="h6">{user.name}</Typography>
+                <Typography>Age: {user.age}</Typography>
+                <Typography>Height: {user.height}</Typography>
+                <Typography>Weight: {user.weight}</Typography>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -81,6 +92,11 @@ const cardsContainerStyles = {
 
 const cardStyles = {
   marginBottom: '16px',
+};
+
+const loaderStyles = {
+  margin: '20px auto',
+  display: 'block',
 };
 
 export default UserSearchList;
