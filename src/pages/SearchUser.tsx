@@ -4,6 +4,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Button } from '@mui/material';
 
 const UserSearchList = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -54,13 +56,40 @@ const UserSearchList = () => {
         <CircularProgress style={loaderStyles} />
       ) : (
         <div style={cardsContainerStyles}>
-          {users.map((user) => (
+          {users.map((user, index) => (
             <Card key={user._id} style={cardStyles} variant="outlined">
               <CardContent>
-                <Typography variant="h6">{user.name}</Typography>
-                <Typography>Age: {user.age}</Typography>
-                <Typography>Height: {user.height}</Typography>
-                <Typography>Weight: {user.weight}</Typography>
+                <div style={cancleHeader}>
+                  <div>
+                    <CancelIcon color='error' style={iconStyles} />
+                  </div>
+                  <div style={cancelledTextStyle}>Cancelled</div>
+                  <div style={cancelHeaderTimeStyle}>
+                    <div>
+                      Order cancelled at
+                    </div>
+                    <div style={cancelHeaderDataStyle}>
+                      {1+index}-11-2023
+                    </div>
+                  </div>
+                </div>
+                <div style={userContentStyles}>
+                    <Typography>{user.name}</Typography>
+                    <div>Age: {user.age}</div>
+                    <div>Height: {user.height}</div>
+                    <div>Weight: {user.weight}</div>
+                </div>
+                <div style={cardBottomStyles}>
+                  <div style={orderStyle}>
+                    <div style={orderHeader}>Order id:</div>
+                    <div style={orderValue}>#{2334452+index}</div>
+                  </div>
+                  <div style={orderStyle}>
+                    <div style={orderHeader}>Amount:</div>
+                    <div style={orderValue}>${299*index}</div>
+                  </div>
+                  <Button style={reorderButtonStyle}>Reorder</Button>
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -70,6 +99,67 @@ const UserSearchList = () => {
   );
 };
 
+
+
+const orderHeader = {
+  fontWeight: 300,
+  padding: '2px'
+}
+
+const orderValue = {
+  fontWeight: 600
+}
+
+const orderStyle = {
+  paddingRight: '15px'
+}
+
+const cancelHeaderDataStyle = {
+  alignSelf: 'center'
+}
+
+const cancelHeaderTimeStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  fontWeight: 200,
+  marginLeft: "auto",
+  fontSize: 'small'
+}
+
+const cancelledTextStyle = {
+  fontWeight: 500,
+  color: '#ff4d4d'
+}
+
+const reorderButtonStyle = {
+  background: '#47d147',
+  color: '#ffffff',
+  marginLeft: "auto"
+}
+
+const cardBottomStyles = {
+  display: 'flex',
+  borderTop: '4px solid #e6e6e6',
+  padding: '7px',
+}
+
+const userContentStyles = {
+  padding: "8px",
+  fontWeight: 200,
+}
+
+const iconStyles = {
+  marginRight: '15px',
+  marginTop: '5px'
+};
+
+const cancleHeader = {
+  padding: '10px',
+  background: '#ffe6e6',
+  borderRadius: '8px 8px 0px 0px',
+  display: 'flex',
+  alignItems: 'center',
+}
 const containerStyles = {
   maxWidth: '400px',
   margin: '0 auto',
@@ -92,6 +182,7 @@ const cardsContainerStyles = {
 
 const cardStyles = {
   marginBottom: '16px',
+  borderRadius: ' 10px',
 };
 
 const loaderStyles = {
