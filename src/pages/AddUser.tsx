@@ -27,7 +27,7 @@ const AddUser = () => {
   const [shouldRenderDialog, setShouldRenderDialog] = useState(isSmallScreen);
 
   const onSubmit = async (formData) => {
-    const apiUrl = `${process.env.REACT_APP_BACKEND_ENDPOINT}/add`
+    const apiUrl = `${process.env.REACT_APP_BACKEND_ENDPOINT}/user/add`
 
     try {
       const response = await fetch(apiUrl, {
